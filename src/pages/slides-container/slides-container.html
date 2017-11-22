@@ -1,0 +1,12 @@
+<header-bar (profileSelected)="profileSelected()" (createBlipSelected)="createBlipSelected()" [title]="currentPageTitle"></header-bar>
+
+<ion-content contentTop="0" contentBottom="0">
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <bubbles [enclosingWidth]="contentWidth" [enclosingHeight]="contentHeight"></bubbles>
+    </ion-slide>
+    <ion-slide>
+      <my-activity></my-activity>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
