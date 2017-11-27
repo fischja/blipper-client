@@ -5,6 +5,8 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BlipProvider } from '../providers/blip/blip';
+import { SlidesProvider } from '../providers/slides/slides';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    BlipProvider,
+    SlidesProvider
   ]
 })
 export class AppModule { }

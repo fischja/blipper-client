@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Content, Icon } from 'ionic-angular';
 import { BubblesComponent } from '../../components/bubbles/bubbles';
+import { SlidesProvider } from '../../providers/slides/slides';
 
 @IonicPage()
 @Component({
@@ -17,12 +18,12 @@ export class SlidesContainerPage {
 
   private currentPageTitle: string = 'TODO: Title';
 
-  goToSlide() {
-    this.slides.slideTo(2, 500);
-  }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private slidesProvider: SlidesProvider) {
+
+    slidesProvider.onSlideChanged().subscribe(x =>
+      this.slides.slideTo(x.slideIndex, x.transitionTime));
   }
 
   ionViewDidLoad() {
@@ -34,12 +35,6 @@ export class SlidesContainerPage {
 
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
-
-    if (currentIndex == 0) {
-    }
-
-    if (currentIndex == 1) {
-    }
   }
 
   ionViewDidEnter() {
