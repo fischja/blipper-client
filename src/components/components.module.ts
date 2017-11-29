@@ -3,12 +3,14 @@ import { BubblesComponent } from './bubbles/bubbles';
 import { MyActivityComponent } from './my-activity/my-activity';
 import { HeaderBarComponent } from './header-bar/header-bar';
 import { IonicModule } from 'ionic-angular';
+import { BlipListItemComponent } from './blip-list-item/blip-list-item';
 
 @NgModule({
     declarations: [
         BubblesComponent,
         MyActivityComponent,
-        HeaderBarComponent
+        HeaderBarComponent,
+    BlipListItemComponent
     ],
     imports: [
         IonicModule
@@ -16,7 +18,8 @@ import { IonicModule } from 'ionic-angular';
     exports: [
         BubblesComponent,
         MyActivityComponent,
-        HeaderBarComponent
+        HeaderBarComponent,
+    BlipListItemComponent
     ]
 })
 export class ComponentsModule { }

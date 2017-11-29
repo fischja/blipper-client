@@ -49,6 +49,10 @@ export class SlidesContainerPage {
     this.navCtrl.push('ProfilePage');
   }
 
+  private topicSelected(){
+    this.navCtrl.push('TopicViewPage');
+  }
+
   private createBlipSelected() {
     this.navCtrl.push('CreateBlipPage');
   }
