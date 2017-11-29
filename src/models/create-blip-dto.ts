@@ -1,8 +1,10 @@
+import { CreateBlipTopicDto } from "./ceate-blip-topic-dto";
+
 export class CreateBlipDto {
 
     title: string;
     content: string;
-    topics: [{ name: string }];
+    topics: [CreateBlipTopicDto];
     userId: number;
     timestamp: string;
 

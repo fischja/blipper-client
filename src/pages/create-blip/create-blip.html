@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>createBlip</ion-title>
+    <ion-title>Create Blip Page</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,14 +24,37 @@
       <p>Content is not valid.</p>
     </ion-item>
 
-    <ion-item [ngClass]="{'error-border':!createBlipForm.controls.topics.valid && createBlipForm.controls.topics.touched}">
-      <ion-label floating>Topics</ion-label>
-      <ion-input formControlName="topics" type="text"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="createBlipForm.controls.topics.hasError('required') && createBlipForm.controls.topics.touched">
-      <p>Topics is not valid.</p>
-    </ion-item>
+    <ion-list>
+      <ion-item *ngFor="let topic of topics">{{topic}}</ion-item>
+    </ion-list>
 
-    <button ion-button full color="primary" [disabled]="!createBlipForm.valid" style="margin-top: 20px;" type="submit">Post</button>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item [ngClass]="{'error-border':!createBlipForm.controls.topics.valid && createBlipForm.controls.topics.touched}">
+            <ion-label floating>Topics</ion-label>
+            <ion-input formControlName="topics" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button round outline type="button" [disabled]="topics.length>=3 || !createBlipForm.controls.topics.valid" (click)="addTopic(createBlipForm.value.topics)">Add</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item *ngIf="createBlipForm.controls.topics.hasError('required') && createBlipForm.controls.topics.touched">
+            <p>Topics is not valid.</p>
+          </ion-item>
+          <ion-item *ngIf="createBlipForm.controls.topics.hasError('exists')">
+            <p>Topic has already been added.</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <ion-col col-2>
+          <button ion-button round outline color="primary" [disabled]="!createBlipForm.valid" type="submit">Post</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
 </ion-content>
