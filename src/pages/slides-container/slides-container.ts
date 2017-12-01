@@ -15,26 +15,38 @@ export class SlidesContainerPage {
 
   private contentWidth: number;
   private contentHeight: number;
-
+  private currentSlideIndex: number = 0;
   private currentPageTitle: string = 'TODO: Title';
 
-
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private slidesProvider: SlidesProvider) {
+  }
 
-    slidesProvider.onSlideChanged().subscribe(x =>
-      this.slides.slideTo(x.slideIndex, x.transitionTime));
+  ionViewWillLoad() {
+    console.log('ionViewWillLoad SlidesContainerPage');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SlidesContainerPage');
 
+    this.slidesProvider.onSlideChanged().subscribe(x => {
+      if (!x.infoOnly) {
+        this.slides.slideTo(x.slideIndex, x.transitionTime);
+      }
+    });
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter SlidesContainerPage');
+    if (this.currentSlideIndex == 0) {
+      this.slidesProvider.changeSlide(true, 0);
+    }
   }
 
   slideChanged() {
+    this.currentSlideIndex = this.slides.getActiveIndex();
 
-    let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is', currentIndex);
+    this.slidesProvider.changeSlide(true, this.currentSlideIndex);
+    console.log('Current index is', this.currentSlideIndex);
   }
 
   ionViewDidEnter() {
@@ -49,7 +61,7 @@ export class SlidesContainerPage {
     this.navCtrl.push('ProfilePage');
   }
 
-  private topicSelected(){
+  private topicSelected() {
     this.navCtrl.push('TopicViewPage');
   }
 

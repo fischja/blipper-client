@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CreateBlipDto } from '../../models/create-blip-dto';
+import { PopularBlip } from '../../models/popular-blip';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class BlipProvider {
 
-  constructor() {
+  constructor(private http: HttpClient) {
     console.log('Created BlipProvider Instance');
   }
 
@@ -22,6 +27,11 @@ export class BlipProvider {
   public delete(blipId: number) {
     console.log('in delete');
 
+  }
+
+  public getTop(): Observable<PopularBlip[]> {
+
+    return this.http.get<PopularBlip[]>('../assets/mock-data/popular-blips.json');
   }
 
 }

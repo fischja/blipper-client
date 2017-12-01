@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BlipProvider } from '../providers/blip/blip';
 import { SlidesProvider } from '../providers/slides/slides';
+import { HttpClientModule } from '@angular/common/http';
+import { TopicProvider } from '../providers/topic/topic';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { SlidesProvider } from '../providers/slides/slides';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -25,7 +28,8 @@ import { SlidesProvider } from '../providers/slides/slides';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     BlipProvider,
-    SlidesProvider
+    SlidesProvider,
+    TopicProvider
   ]
 })
 export class AppModule { }

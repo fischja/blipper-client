@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { BlipProvider } from '../../providers/blip/blip';
+import { Subscription } from 'rxjs/Subscription';
+import { PopularBlip } from '../../models/popular-blip';
 
 @IonicPage()
 @Component({
@@ -8,16 +11,35 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TopicViewPage {
 
-  items = [];
+  private items: PopularBlip[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    for (let i = 0; i < 30; i++) {
-      this.items.push(this.items.length);
-    }
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private blipProvider: BlipProvider
+  ) {
+    this.items = new Array<PopularBlip>();
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter TopicViewPage');
+
+    this.blipProvider.getTop().subscribe(x => {
+      x.forEach(item => {
+        this.items.push(item);
+      })
+    });
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave TopicViewPage');
+
+    this.items = new Array<PopularBlip>();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TopicViewPage');
+
+    console.log(this.items);
   }
 
 
@@ -25,9 +47,12 @@ export class TopicViewPage {
     console.log('Begin async operation');
 
     setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        this.items.push(this.items.length);
-      }
+
+      this.blipProvider.getTop().subscribe(x => {
+        x.forEach(item => {
+          this.items.push(item);
+        })
+      });
 
       console.log('Async operation has ended');
       infiniteScroll.complete();
@@ -35,3 +60,4 @@ export class TopicViewPage {
   }
 
 }
+  

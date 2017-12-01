@@ -1,20 +1,60 @@
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component, Input, SimpleChange, OnInit } from '@angular/core';
 import { Game, AUTO } from 'phaser-ce';
 import { IBlipperPage } from '../../interfaces/IBlipperPage';
+import { TopicProvider } from '../../providers/topic/topic';
+import { PopularTopic } from '../../models/popular-topic';
+import { SlidesProvider } from '../../providers/slides/slides';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'bubbles',
   templateUrl: 'bubbles.html'
 })
-export class BubblesComponent implements IBlipperPage {
+export class BubblesComponent implements IBlipperPage, OnInit, OnDestroy {
 
   @Input() public enclosingWidth: number;
   @Input() public enclosingHeight: number;
 
-  pageTitle: string = "Blipper Feed";
+  public pageTitle: string = "Blipper Feed";
 
-  constructor() {
+  private topics: PopularTopic[];
+  private topicsSubscription: Subscription;
+
+  constructor(
+    private topicProvider: TopicProvider,
+    private slidesProvider: SlidesProvider
+  ) {
     console.log('Hello BubblesComponent Component');
+  }
+
+  ngOnInit() {
+    console.log('ngOnInit BubblesComponent');
+
+    this.topics = new Array<PopularTopic>();
+
+    this.topicProvider.getTop().subscribe(x => {
+      this.topics = x;
+      console.log(this.topics);
+    });
+
+    this.topicsSubscription = this.slidesProvider.onSlideChanged().subscribe(x => {
+      if (x.slideIndex == 0) {
+        this.topicProvider.getTop().subscribe(x => {
+          this.topics = x;
+          console.log(this.topics);
+        });
+      }
+    });
+
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy BubblesComponent');
+
+    if (this.topicsSubscription || this.topicsSubscription === null) {
+      this.topicsSubscription.unsubscribe();
+    }
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -135,10 +175,5 @@ export class BubblesComponent implements IBlipperPage {
 
     function render() {
     }
-  }
-
-  ngOnInit() {
-    console.log("ngOnInit BubblesGameComponent.");
-
   }
 }

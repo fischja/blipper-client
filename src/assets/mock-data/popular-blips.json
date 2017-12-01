@@ -1,0 +1,44 @@
+[
+    {
+        "blipId": 1,
+        "title": "title 1",
+        "content": "content 1",
+        "timestamp": "timestring",
+        "likes": 3,
+        "dislikes": 4,
+        "views": 100,
+        "topics": [
+            {
+                "topicId": 2,
+                "name": "topic1"
+            }
+        ],
+        "user": {
+            "userId": 1,
+            "username": "Jan"
+        }
+    },
+    {
+        "blipId": 2,
+        "title": "title 2",
+        "content": "content 2",
+        "timestamp": "timestring",
+        "likes": 4,
+        "dislikes": 1,
+        "views": 192,
+        "topics": [
+            {
+                "topicId": 5,
+                "name": "topic2"
+            },
+            {
+                "topicId": 98,
+                "name": "topdsfg"
+            }
+        ],
+        "user": {
+            "userId": 1,
+            "username": "Jan"
+        }
+    }
+]

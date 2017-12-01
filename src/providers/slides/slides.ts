@@ -1,24 +1,36 @@
 import { Injectable, transition } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class SlidesProvider {
 
-  private slideSubject: Subject<{ slideIndex: number, transitionTime: number }>;
+  private slideSubject: Subject<ChangeSlideInfo>;
 
   constructor() {
     console.log('Created SlidesProvider Provider');
 
-    this.slideSubject = new Subject<{ slideIndex: number, transitionTime: number }>();
+    this.slideSubject = new Subject<ChangeSlideInfo>();
   }
 
-  public onSlideChanged(): Observable<{ slideIndex: number, transitionTime: number }> {
+  public onSlideChanged(): Observable<ChangeSlideInfo> {
     return this.slideSubject.asObservable();
   }
 
-  public changeSlide(slideIndex: number, transitionTime: number = 500) {
-    this.slideSubject.next({ slideIndex, transitionTime });
+  public changeSlide(infoOnly: boolean, slideIndex: number, transitionTime: number = 500) {
+    this.slideSubject.next(new ChangeSlideInfo(slideIndex, transitionTime, infoOnly));
+  }
+}
+
+class ChangeSlideInfo {
+
+  constructor(slideIndex: number, transitionTime: number, infoOnly: boolean) {
+    this.slideIndex = slideIndex;
+    this.transitionTime = transitionTime;
+    this.infoOnly = infoOnly;
   }
 
+  slideIndex: number;
+  transitionTime: number;
+  infoOnly: boolean;
 }
